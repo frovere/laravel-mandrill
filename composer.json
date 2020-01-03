@@ -1,0 +1,57 @@
+{
+    "name": "felrov/laravel-mandrill",
+    "description": "Laravel Mandrill Mail Transport",
+    "type": "library",
+    "keywords": [
+        "mandrill",
+        "laravel",
+        "mail",
+        "email"
+    ],
+    "require": {
+        "php": ">= 7.2",
+        "guzzlehttp/guzzle": "^6.0",
+        "illuminate/mail": "^5.6 || ^6.0",
+        "illuminate/support": "^5.6 || ^6.0"
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^2.16",
+        "nunomaduro/collision": "^3.0",
+        "orchestra/testbench": "^4.0",
+        "phpunit/phpunit": "^8.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Felrov\\Drill\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Felrov\\Drill\\Tests\\": "tests/"
+        }
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Felipe Rovere",
+            "email": "flp.rovere@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Felrov\\Drill\\MandrillServiceProvider"
+            ]
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit"
+    },
+    "config": {
+        "preferred-install": "dist",
+        "sort-packages": true,
+        "optimize-autoloader": true
+    },
+    "prefer-stable": true,
+    "minimum-stability": "dev"
+}

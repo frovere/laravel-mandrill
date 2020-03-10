@@ -13,11 +13,11 @@ class MandrillServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        if ($this->app['config']['mail.driver'] !== 'mandrill') {
+        if (! $this->shouldRegister()) {
             return;
         }
 
-        $this->app->make('swift.transport')->extend('mandrill', function () {
+        $this->resolveTransportManager()->extend('mandrill', function () {
             return $this->app->make('mandrill.transport');
         });
     }
@@ -27,7 +27,7 @@ class MandrillServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->mergeConfigFrom(\realpath(__DIR__.'/../config/mandrill.php'), 'services.mandrill');
+        $this->setupConfig();
 
         $this->app->bind('mandrill.transport', function () {
             $config = $this->app['config']->get('services.mandrill', []);
@@ -39,6 +39,36 @@ class MandrillServiceProvider extends ServiceProvider
     }
 
     /**
+     * Resolve the mail manager.
+     *
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     *
+     * @return \Illuminate\Mail\TransportManager|\Illuminate\Mail\MailManager
+     */
+    public function resolveTransportManager()
+    {
+        if ($this->app->has('mail.manager')) {
+            return $this->app->make('mail.manager');
+        }
+
+        return $this->app->make('swift.transport');
+    }
+
+    /**
+     * Determine if we should register the driver.
+     *
+     * @return bool
+     */
+    protected function shouldRegister()
+    {
+        if ($this->app->has('mail.manager')) {
+            return $this->app['config']['mail.default'] === 'mandrill';
+        }
+
+        return $this->app['config']['mail.driver'] === 'mandrill';
+    }
+
+    /**
      * Get a fresh Guzzle HTTP client instance.
      */
     protected function guzzle(array $config): HttpClient
@@ -46,5 +76,14 @@ class MandrillServiceProvider extends ServiceProvider
         return new HttpClient(Arr::add(
             $config['guzzle'] ?? [], 'connect_timeout', 60
         ));
+    }
+
+    protected function setupConfig()
+    {
+        $this->mergeConfigFrom(\realpath(__DIR__.'/../config/mandrill.php'), 'services.mandrill');
+
+        if ($this->app['config']->has('mail.mailers')) {
+            $this->app['config']->set('mail.mailers.mandrill', ['transport' => 'mandrill']);
+        }
     }
 }

@@ -9,15 +9,15 @@
         "email"
     ],
     "require": {
-        "php": ">= 7.2",
+        "php": "^7.2.5",
         "guzzlehttp/guzzle": "^6.0",
-        "illuminate/mail": "^5.6 || ^6.0",
-        "illuminate/support": "^5.6 || ^6.0"
+        "illuminate/mail": "^5.6 || ^6.0 || ^7.0",
+        "illuminate/support": "^5.6 || ^6.0 || ^7.0"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^2.16",
-        "nunomaduro/collision": "^3.0",
-        "orchestra/testbench": "^4.0",
+        "nunomaduro/collision": "^4.1",
+        "orchestra/testbench": "^5.0",
         "phpunit/phpunit": "^8.0"
     },
     "autoload": {

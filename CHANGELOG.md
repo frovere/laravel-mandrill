@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.3.0](https://github.com/frovere/laravel-mandrill/compare/v0.2.1...v0.3.0) (2020-09-07)
+
+
+### Features
+
+* **laravel:** support laravel v8.x ([4561e3d](https://github.com/frovere/laravel-mandrill/commit/4561e3df4c7ff092da20aeed66e31e449e6fcb43))
+
 ### [0.2.1](https://github.com/frovere/laravel-mandrill/compare/v0.2.0...v0.2.1) (2020-09-07)
 
 ### Chore

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit backupGlobals="false"
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         backupGlobals="false"
          backupStaticAttributes="false"
          beStrictAboutTestsThatDoNotTestAnything="true"
          beStrictAboutOutputDuringTests="true"
@@ -14,17 +15,18 @@
          stopOnError="false"
          stopOnFailure="false"
          verbose="true"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd"
 >
-    <filter>
-        <whitelist processUncoveredFilesFromWhitelist="true">
+    <coverage processUncoveredFiles="true">
+        <include>
             <directory suffix=".php">./src</directory>
-        </whitelist>
-    </filter>
+        </include>
+    </coverage>
     <testsuite name="Tests">
         <directory suffix="Test.php">./tests</directory>
     </testsuite>
     <listeners>
-        <listener class="NunoMaduro\Collision\Adapters\Phpunit\Printer" />
+        <listener class="NunoMaduro\Collision\Adapters\Phpunit\Printer"/>
     </listeners>
     <php>
         <server name="APP_ENV" value="testing"/>

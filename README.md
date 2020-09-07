@@ -13,7 +13,7 @@ $ composer require felrov/laravel-mandrill
 Update your `.env` file by adding your api key and set your mail driver to `mandrill`.
 
 ```php
-MAIL_DRIVER=mandrill
+MAIL_MAILER=mandrill
 MANDRILL_SECRET=YOUR-API-KEY-HERE
 ```
 

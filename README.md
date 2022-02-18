@@ -12,16 +12,8 @@ $ composer require felrov/laravel-mandrill
 
 Update your `.env` file by adding your api key and set your mail driver to `mandrill`.
 
-### Laravel 7.x or newer
 ```php
 MAIL_MAILER=mandrill
-MANDRILL_SECRET=YOUR-API-KEY-HERE
-```
-
-### Laravel 6.x
-
-```php
-MAIL_DRIVER=mandrill
 MANDRILL_SECRET=YOUR-API-KEY-HERE
 ```
 

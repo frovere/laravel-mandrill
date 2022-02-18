@@ -29,8 +29,8 @@ class MandrillServiceProvider extends ServiceProvider
     {
         $this->setupConfig();
 
-        $this->app->bind('mandrill.transport', function () {
-            $config = $this->app['config']->get('services.mandrill', []);
+        $this->app->bind('mandrill.transport', function ($app) {
+            $config = $app['config']->get('services.mandrill', []);
 
             return new MandrillTransport($this->guzzle($config), $config['secret'], $config['options'] ?? []);
         });
@@ -43,15 +43,11 @@ class MandrillServiceProvider extends ServiceProvider
      *
      * @throws \Illuminate\Contracts\Container\BindingResolutionException
      *
-     * @return \Illuminate\Mail\TransportManager|\Illuminate\Mail\MailManager
+     * @return \Illuminate\Mail\MailManager
      */
     public function resolveTransportManager()
     {
-        if ($this->app->has('mail.manager')) {
-            return $this->app->make('mail.manager');
-        }
-
-        return $this->app->make('swift.transport');
+        return $this->app->make('mail.manager');
     }
 
     /**
@@ -61,11 +57,7 @@ class MandrillServiceProvider extends ServiceProvider
      */
     protected function shouldRegister()
     {
-        if ($this->app->has('mail.manager')) {
-            return $this->app['config']['mail.default'] === 'mandrill';
-        }
-
-        return $this->app['config']['mail.driver'] === 'mandrill';
+        return $this->app['config']['mail.default'] === 'mandrill';
     }
 
     /**

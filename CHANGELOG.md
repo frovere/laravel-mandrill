@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.5.0](https://github.com/frovere/laravel-mandrill/compare/v0.4.0...v0.5.0) (2022-02-18)
+
+
+### ⚠ BREAKING CHANGES
+
+* **deps:** add laravel v9 support
+
+### Features
+
+* **deps:** add laravel v9 support ([d27b2eb](https://github.com/frovere/laravel-mandrill/commit/d27b2eb7bf5bc381340205547014d427113dc130))
+
 ## [0.4.0](https://github.com/frovere/laravel-mandrill/compare/v0.3.1...v0.4.0) (2022-02-18)
 
 

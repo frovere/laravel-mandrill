@@ -2,37 +2,50 @@
 
 namespace Felrov\Drill;
 
-use GuzzleHttp\Client as HttpClient;
-use Illuminate\Support\Arr;
 use Illuminate\Support\ServiceProvider;
+use Symfony\Component\Mailer\Bridge\Mailchimp\Transport\MandrillTransportFactory;
+use Symfony\Component\Mailer\Transport\Dsn;
 
 class MandrillServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap any application services.
      */
-    public function boot()
+    public function boot(): void
     {
-        if (! $this->shouldRegister()) {
+        if (!$this->shouldRegister()) {
             return;
         }
 
-        $this->resolveTransportManager()->extend('mandrill', function () {
-            return $this->app->make('mandrill.transport');
-        });
+        $this->resolveTransportManager()->extend('mandrill', fn () => $this->app->make('mandrill.transport'));
     }
 
     /**
      * Register any application services.
      */
-    public function register()
+    public function register(): void
     {
         $this->setupConfig();
+
+        $this->app->bind('mandrill.http-client', fn () => null);
 
         $this->app->bind('mandrill.transport', function ($app) {
             $config = $app['config']->get('services.mandrill', []);
 
-            return new MandrillTransport($this->guzzle($config), $config['secret'], $config['options'] ?? []);
+            if (isset($config['scheme']) && $config['scheme'] === 'smtp') {
+                throw new \InvalidArgumentException('Use SMTP Laravel Driver');
+            }
+
+            return (new MandrillTransportFactory(null, $this->app->make('mandrill.http-client'), null))->create(
+                new Dsn(
+                    'mandrill+'.($config['scheme'] ?? 'https'),
+                    $config['endpoint'] ?? 'default',
+                    $config['secret'],
+                    null,
+                    null,
+                    $config['options'] ?? [],
+                )
+            );
         });
 
         $this->app->alias('mandrill.transport', MandrillTransport::class);
@@ -41,9 +54,9 @@ class MandrillServiceProvider extends ServiceProvider
     /**
      * Resolve the mail manager.
      *
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
-     *
      * @return \Illuminate\Mail\MailManager
+     *
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
     public function resolveTransportManager()
     {
@@ -60,17 +73,7 @@ class MandrillServiceProvider extends ServiceProvider
         return $this->app['config']['mail.default'] === 'mandrill';
     }
 
-    /**
-     * Get a fresh Guzzle HTTP client instance.
-     */
-    protected function guzzle(array $config): HttpClient
-    {
-        return new HttpClient(Arr::add(
-            $config['guzzle'] ?? [], 'connect_timeout', 60
-        ));
-    }
-
-    protected function setupConfig()
+    protected function setupConfig(): void
     {
         $this->mergeConfigFrom(\realpath(__DIR__.'/../config/mandrill.php'), 'services.mandrill');
 

@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.6.0](https://github.com/frovere/laravel-mandrill/compare/v0.5.1...v0.6.0) (2022-09-26)
+
+
+### ⚠ BREAKING CHANGES
+
+* **symfony-mailer:** implement symfony mailer
+
+### Features
+
+* **symfony-mailer:** implement symfony mailer ([f2b7ce5](https://github.com/frovere/laravel-mandrill/commit/f2b7ce5a3d470bcd757e39cd55dd523a368ebeaa))
+
 ### [0.5.1](https://github.com/frovere/laravel-mandrill/compare/v0.5.0...v0.5.1) (2022-09-23)
 
 

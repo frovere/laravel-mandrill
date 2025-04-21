@@ -19,9 +19,9 @@ MANDRILL_SCHEME=https | api
 MANDRILL_SECRET=YOUR-API-KEY-HERE
 ```
 
-You are ready to use mandrill through [Laravel](https://laravel.com/docs/8.x/mail)
+You are ready to use mandrill through [Laravel](https://laravel.com/docs/12.x/mail)
 
-> Remember, when using Mandrill the sending address used in your emails must be a [valid Sender Signature](https://mandrill.zendesk.com/hc/en-us/articles/205582267-About-SPF-and-DKIM) that you have already configured.
+> Remember, when using Mandrill the sending address used in your emails must be a [valid Sender Signature](https://mailchimp.com/developer/transactional/docs/authentication-delivery/#dkim) that you have already configured.
 
 ## Testing
 
